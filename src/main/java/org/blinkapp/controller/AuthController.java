@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     UsersRepository usersRepository;
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
-    JwtUtil jwtUtils;
+    JwtUtil jwtUtil;
+
     @PostMapping("/signin")
     public String authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
@@ -31,12 +35,12 @@ public class AuthController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtUtils.generateToken(userDetails.getUsername());
+        return jwtUtil.generateToken(userDetails.getUsername());
     }
 
     @PostMapping("/signup")
     public String registerUser(@RequestBody User user) {
-        if(usersRepository.existsByUsername(user.getEmail())) {
+        if(usersRepository.existsByEmail(user.getEmail())) {
             return "Error: Email address already in use";
         }
 

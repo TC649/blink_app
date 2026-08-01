@@ -11,18 +11,17 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @ComponentScan
 public class ApplicationConfiguration {
 
-    @Value("${DB_URL")
+    @Value("${spring.datasource.url}")
     private String url;
 
-    @Value("${DB_USERNAME}")
+    @Value("${spring.datasource.username}")
     private String username;
 
-    @Value("${DB_PASSWORD")
+    @Value("${spring.datasource.password}")
     private String password;
 
     @Bean
