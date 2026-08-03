@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
-    private JwtUtil jwtUtils;
+    private JwtUtil jwtUtil;
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
@@ -30,9 +30,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if(jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUsernameFromToken(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if(jwt != null && jwtUtil.validateJwtToken(jwt)) {
+                String email = jwtUtil.getUsernameFromToken(jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
