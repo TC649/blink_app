@@ -16,17 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/admin")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     UsersRepository usersRepository;
-
     @Autowired
     PasswordEncoder passwordEncoder;
-
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
