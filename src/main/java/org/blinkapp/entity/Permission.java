@@ -9,8 +9,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +19,3 @@ public class Permission {
     @Column(unique = true, nullable = false)
     private String name;
 }
-

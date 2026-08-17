@@ -17,14 +17,14 @@ import java.util.Set;
 @AllArgsConstructor
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, unique = true)
     private ERole name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_permissions",
             joinColumns = @JoinColumn(name = "role_id"),

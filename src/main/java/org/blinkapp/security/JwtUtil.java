@@ -5,7 +5,10 @@ import jakarta.annotation.PostConstruct;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
+import org.blinkapp.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -23,9 +26,22 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String username) {
+    public String generateToken(UserDetailsImpl userDetails) {
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(authority -> authority.startsWith("ROLE_"))
+                .toList();
+
+        List<String> permissions = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(authority -> !authority.startsWith("ROLE_"))
+                .toList();
+
         return Jwts.builder()
-                .subject(username)
+                .subject(userDetails.getUsername())
+                .claim("roles", roles)
+                .claim("permissions", permissions)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key)
