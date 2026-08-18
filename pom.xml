@@ -12,6 +12,8 @@
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <postgresql.version>42.7.3</postgresql.version>
+        <testcontainers.version>1.19.8</testcontainers.version>
     </properties>
 
     <parent>
@@ -149,6 +151,7 @@
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
                     </dependency>
                 </dependencies>
 
@@ -156,8 +159,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql:blink_db</url>
-                        <user>tcampbell</user>
-                        <password>Starcourt85*</password>
+                        <user>${env.DB_USER}</user>
+                        <password>${env.DB_PASSWORD}</password>
                     </jdbc>
 
                     <generator>
@@ -199,14 +202,17 @@
             <plugin>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+                <version>0.0.4</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.testcontainers</groupId>
                         <artifactId>postgresql</artifactId>
+                        <version>${testcontainers.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -215,8 +221,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <configuration>
                     <url>jdbc:postgresql:blink_app</url>
-                    <user>tcampbell</user>
-                    <password>Starcourt85*</password>
+                    <user>${env.DB_USER}</user>
+                    <password>${env.DB_PASSWORD}</password>
                 </configuration>
             </plugin>
         </plugins>
