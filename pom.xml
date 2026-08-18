@@ -14,6 +14,8 @@
         <java.version>22</java.version>
         <jooq.version>3.21.6</jooq.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <postgresql.version>42.7.3</postgresql.version>
+        <testcontainers.version>1.19.8</testcontainers.version>
     </properties>
 
     <parent>
@@ -149,8 +151,8 @@
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql:blink_db</url>
-                        <user>tcampbell</user>
-                        <password>Starcourt85*</password>
+                        <user>${env.DB_USER}</user>
+                        <password>${env.DB_PASSWORD}</password>
                     </jdbc>
 
                     <generator>
