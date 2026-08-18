@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS public.title (
+    TitleID UUID NOT NULL,
+    Description VARCHAR(255) NOT NULL,
+    ImageID INTEGER NOT NULL,
+    ImageName VARCHAR(255) NOT NULL,
+    Date DATE NOT NULL
+);

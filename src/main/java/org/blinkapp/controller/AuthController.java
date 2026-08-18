@@ -5,12 +5,13 @@ import org.blinkapp.repository.RefreshTokenRepository;
 import org.blinkapp.repository.UsersRepository;
 import org.blinkapp.security.JwtUtil;
 import org.blinkapp.service.RefreshTokenService;
+import org.blinkapp.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -39,8 +40,9 @@ public class AuthController {
                         user.getPassword()
                 )
         );
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtUtil.generateToken(userDetails.getUsername());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return jwtUtil.generateToken(userDetails);
     }
 
     @PostMapping("/signup")
@@ -50,10 +52,9 @@ public class AuthController {
         }
 
         User newUser = new User(
-                null,
-                user.getEmail(),
-                passwordEncoder.encode(user.getPassword()),
-                user.getRoles()
+                        null,
+                        user.getEmail(),
+                        passwordEncoder.encode(user.getPassword()), user.getRoles()
         );
         usersRepository.save(newUser);
         return "User registered successfully";
@@ -68,7 +69,9 @@ public class AuthController {
                         refreshTokenRepository.delete(token);
                         return ResponseEntity.badRequest().body("Refresh token expired");
                     }
-                    String newJwt = jwtUtil.generateToken(token.getUser().getEmail());
+                    User user = token.getUser();
+                    UserDetailsImpl userDetails = UserDetailsImpl.build(user);
+                    String newJwt = jwtUtil.generateToken(userDetails);
                     return ResponseEntity.ok(Map.of("token", newJwt));
                 })
                 .orElse(ResponseEntity.badRequest().body("Invalid refresh token"));
