@@ -6,6 +6,7 @@ package org.jooq.records;
 
 import org.jooq.records.tables.FlywaySchemaHistory;
 import org.jooq.records.tables.Title;
+import org.jooq.records.tables.TitleImage;
 
 
 /**
@@ -23,4 +24,9 @@ public class Tables {
      * The table <code>public.title</code>.
      */
     public static final Title TITLE = Title.TITLE;
+
+    /**
+     * The table <code>public.title_image</code>.
+     */
+    public static final TitleImage TITLE_IMAGE = TitleImage.TITLE_IMAGE;
 }

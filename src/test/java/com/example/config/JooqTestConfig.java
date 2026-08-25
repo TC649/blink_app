@@ -1,33 +1,29 @@
-package org.blinkapp;
+package com.example.config;
 
-import org.blinkapp.repository.TitleRepository;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration
-@ComponentScan
-public class ApplicationConfiguration {
 
-    @Value("${spring.datasource.url}")
+@TestConfiguration
+public class JooqTestConfig {
+
+    @Value("${DB_URL}")
     private String url;
 
     @Value("${spring.datasource.username}")
     private String username;
 
-    @Value("${spring.datasource.password}")
+    @Value("${DB_PASSWORD}")
     private String password;
 
     @Bean
-    @Profile("!test")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(url);
@@ -37,11 +33,5 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public DSLContext dslContext(DataSource dataSource) { return DSL.using(dataSource, SQLDialect.POSTGRES);}
-
-    @Bean
-    public TitleRepository titleRepository(DSLContext dslContext) {
-        return new TitleRepository(dslContext);
-    }
-
+    public DSLContext dsl(DataSource dataSource) { return DSL.using(dataSource, SQLDialect.POSTGRES); }
 }

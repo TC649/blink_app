@@ -6,10 +6,10 @@ package org.jooq.records.tables;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.UUID;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
@@ -20,10 +20,12 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.records.Keys;
 import org.jooq.records.Public;
 import org.jooq.records.tables.records.TitleRecord;
 
@@ -50,29 +52,19 @@ public class Title extends TableImpl<TitleRecord> {
     }
 
     /**
-     * The column <code>public.title.titleid</code>.
-     */
-    public final TableField<TitleRecord, UUID> TITLEID = createField(DSL.name("titleid"), SQLDataType.UUID.nullable(false), this, "");
-
-    /**
      * The column <code>public.title.description</code>.
      */
-    public final TableField<TitleRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-    /**
-     * The column <code>public.title.imageid</code>.
-     */
-    public final TableField<TitleRecord, Integer> IMAGEID = createField(DSL.name("imageid"), SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
-     * The column <code>public.title.imagename</code>.
-     */
-    public final TableField<TitleRecord, String> IMAGENAME = createField(DSL.name("imagename"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<TitleRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.title.date</code>.
      */
     public final TableField<TitleRecord, LocalDate> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATE.nullable(false), this, "");
+
+    /**
+     * The column <code>public.title.titleid</code>.
+     */
+    public final TableField<TitleRecord, Integer> TITLEID = createField(DSL.name("titleid"), SQLDataType.INTEGER.nullable(false).generatedByDefaultAsIdentity(), this, "");
 
     private Title(Name alias, Table<TitleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -106,6 +98,16 @@ public class Title extends TableImpl<TitleRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
+    }
+
+    @Override
+    public Identity<TitleRecord, Integer> getIdentity() {
+        return (Identity<TitleRecord, Integer>) super.getIdentity();
+    }
+
+    @Override
+    public UniqueKey<TitleRecord> getPrimaryKey() {
+        return Keys.TITLE_PKEY;
     }
 
     @Override

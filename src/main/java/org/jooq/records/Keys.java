@@ -9,7 +9,11 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.records.tables.FlywaySchemaHistory;
+import org.jooq.records.tables.Title;
+import org.jooq.records.tables.TitleImage;
 import org.jooq.records.tables.records.FlywaySchemaHistoryRecord;
+import org.jooq.records.tables.records.TitleImageRecord;
+import org.jooq.records.tables.records.TitleRecord;
 
 
 /**
@@ -24,4 +28,6 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, DSL.name("flyway_schema_history_pk"), new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
+    public static final UniqueKey<TitleRecord> TITLE_PKEY = Internal.createUniqueKey(Title.TITLE, DSL.name("title_pkey"), new TableField[] { Title.TITLE.TITLEID }, true);
+    public static final UniqueKey<TitleImageRecord> TITLE_IMAGE_PKEY = Internal.createUniqueKey(TitleImage.TITLE_IMAGE, DSL.name("title_image_pkey"), new TableField[] { TitleImage.TITLE_IMAGE.IMAGEID }, true);
 }

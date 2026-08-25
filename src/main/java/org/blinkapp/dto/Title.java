@@ -3,14 +3,12 @@ package org.blinkapp.dto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @RequiredArgsConstructor
 public class Title {
-    private final int ID;
-    private final String Description;
-    private final int ImageID;
-    private final String ImageName;
-    private final Date Date;
+    private int TitleID;
+    private String Description;
+    private LocalDate Date;
 }
