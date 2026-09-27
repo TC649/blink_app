@@ -5,8 +5,10 @@ package org.jooq.records;
 
 
 import org.jooq.records.tables.FlywaySchemaHistory;
+import org.jooq.records.tables.Testaments;
 import org.jooq.records.tables.Title;
 import org.jooq.records.tables.TitleImage;
+import org.jooq.records.tables.Treatments;
 
 
 /**
@@ -21,6 +23,11 @@ public class Tables {
     public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
+     * The table <code>public.testaments</code>.
+     */
+    public static final Testaments TESTAMENTS = Testaments.TESTAMENTS;
+
+    /**
      * The table <code>public.title</code>.
      */
     public static final Title TITLE = Title.TITLE;
@@ -29,4 +36,9 @@ public class Tables {
      * The table <code>public.title_image</code>.
      */
     public static final TitleImage TITLE_IMAGE = TitleImage.TITLE_IMAGE;
+
+    /**
+     * The table <code>public.treatments</code>.
+     */
+    public static final Treatments TREATMENTS = Treatments.TREATMENTS;
 }

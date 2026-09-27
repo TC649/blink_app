@@ -12,8 +12,10 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.records.tables.FlywaySchemaHistory;
+import org.jooq.records.tables.Testaments;
 import org.jooq.records.tables.Title;
 import org.jooq.records.tables.TitleImage;
+import org.jooq.records.tables.Treatments;
 
 
 /**
@@ -35,6 +37,11 @@ public class Public extends SchemaImpl {
     public final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
+     * The table <code>public.testaments</code>.
+     */
+    public final Testaments TESTAMENTS = Testaments.TESTAMENTS;
+
+    /**
      * The table <code>public.title</code>.
      */
     public final Title TITLE = Title.TITLE;
@@ -43,6 +50,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.title_image</code>.
      */
     public final TitleImage TITLE_IMAGE = TitleImage.TITLE_IMAGE;
+
+    /**
+     * The table <code>public.treatments</code>.
+     */
+    public final Treatments TREATMENTS = Treatments.TREATMENTS;
 
     /**
      * No further instances allowed
@@ -61,8 +73,10 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
+            Testaments.TESTAMENTS,
             Title.TITLE,
-            TitleImage.TITLE_IMAGE
+            TitleImage.TITLE_IMAGE,
+            Treatments.TREATMENTS
         );
     }
 }

@@ -4,16 +4,22 @@
 package org.jooq.records;
 
 
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.records.tables.FlywaySchemaHistory;
+import org.jooq.records.tables.Testaments;
 import org.jooq.records.tables.Title;
 import org.jooq.records.tables.TitleImage;
+import org.jooq.records.tables.Treatments;
 import org.jooq.records.tables.records.FlywaySchemaHistoryRecord;
+import org.jooq.records.tables.records.TestamentsRecord;
 import org.jooq.records.tables.records.TitleImageRecord;
 import org.jooq.records.tables.records.TitleRecord;
+import org.jooq.records.tables.records.TreatmentsRecord;
 
 
 /**
@@ -28,6 +34,14 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, DSL.name("flyway_schema_history_pk"), new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
+    public static final UniqueKey<TestamentsRecord> TESTAMENTS_PKEY = Internal.createUniqueKey(Testaments.TESTAMENTS, DSL.name("testaments_pkey"), new TableField[] { Testaments.TESTAMENTS.TESTAMENTID }, true);
     public static final UniqueKey<TitleRecord> TITLE_PKEY = Internal.createUniqueKey(Title.TITLE, DSL.name("title_pkey"), new TableField[] { Title.TITLE.TITLEID }, true);
     public static final UniqueKey<TitleImageRecord> TITLE_IMAGE_PKEY = Internal.createUniqueKey(TitleImage.TITLE_IMAGE, DSL.name("title_image_pkey"), new TableField[] { TitleImage.TITLE_IMAGE.IMAGEID }, true);
+    public static final UniqueKey<TreatmentsRecord> TREATMENTS_PKEY = Internal.createUniqueKey(Treatments.TREATMENTS, DSL.name("treatments_pkey"), new TableField[] { Treatments.TREATMENTS.TREATMENTID }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<TestamentsRecord, TreatmentsRecord> TESTAMENTS__FK_TESTAMENT_TREATMENT = Internal.createForeignKey(Testaments.TESTAMENTS, DSL.name("fk_testament_treatment"), new TableField[] { Testaments.TESTAMENTS.TREATMENTID }, Keys.TREATMENTS_PKEY, new TableField[] { Treatments.TREATMENTS.TREATMENTID }, true, ForeignKeyRule.NO_ACTION, ForeignKeyRule.NO_ACTION);
 }
