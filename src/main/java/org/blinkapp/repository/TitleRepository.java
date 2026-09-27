@@ -28,7 +28,7 @@ public class TitleRepository {
 
     private final DSLContext dsl;
 
-    private static final Logger log = LoggerFactory.getLogger(UsersRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(TitleRepository.class);
 
     @Autowired
     public TitleRepository(DSLContext dsl) {
